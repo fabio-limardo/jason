@@ -1,0 +1,17 @@
+MAS labirintoInganno {
+
+	infrastructure: Centralised
+	environment : env.Labirinto
+
+	agents:
+		agent1 sample_agent;
+		velocistaRosso velocistaSquadraRossa;
+//		detectiveSquadraRossa #3;
+//		
+//		velocistaSquadraBlu #3;
+//		detectiveSquadraBlu #3;
+		
+
+	aslSourcePath:
+		"src/asl";
+}
