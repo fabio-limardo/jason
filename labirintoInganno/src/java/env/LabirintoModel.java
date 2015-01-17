@@ -105,6 +105,7 @@ public class LabirintoModel {
 		
 		public boolean controllo(String dir){
 			Cella cella = new Cella(0,0);
+			log("before switch");
 			switch (dir){
 			case "moveUp": //muove sopra				
 				cella = getCella(position[0]-1,position[1]);							
@@ -121,7 +122,8 @@ public class LabirintoModel {
 					
 			}	
 						
-			try{
+			try{	
+				log("try");
 				if(cella.isAttraversabile()){
 					gotIt = true; 
 					position[0] = cella.getCoordinataX();
@@ -130,7 +132,7 @@ public class LabirintoModel {
 					makeAnotherChoice = true;
 			}catch(NullPointerException e){
 					makeAnotherChoice = true;
-			}
+				}
 			return true;
 		}
 
@@ -141,5 +143,7 @@ public class LabirintoModel {
 		public void setPosition(int[] position) {
 			this.position = position;
 		}
-		
+		public void log(String aMessage){
+			System.out.println(aMessage);
+		}
 }

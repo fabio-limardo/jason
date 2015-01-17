@@ -78,7 +78,7 @@ public class Labirinto extends Environment {
 			result = model.trovaEntrata();
 		}else if(action.equals(selezionaDirezione)){
 			result = model.selezionaDirezione();
-		}else if (action.getFunctor().equals(controllo)) {
+		}else if (action.getFunctor().equals("controllo")) {
 			String l = action.getTerm(0).toString();
 			result = model.controllo(l);
 		}
