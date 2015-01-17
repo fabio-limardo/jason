@@ -11,12 +11,15 @@ public class Labirinto extends Environment {
 	
 	public static final Literal trovaEntrata = Literal.parseLiteral("trovaEntrata");
 	public static final Literal selezionaDirezione = Literal.parseLiteral("selezionaDirezione");
+	public static final Literal controllo = Literal.parseLiteral("controllo");
 	public static final Literal start = Literal.parseLiteral("startTrovato");
 	public static final Literal artefatct = Literal.parseLiteral("artefattoTrovato");
 	public static final Literal end = Literal.parseLiteral("fineGioco");
-	
+	public static final Literal anotherChoice = Literal.parseLiteral("direzioneNonPercorribile");
+	public static final Literal gotIt = Literal.parseLiteral("direzionePercorribile");
 	
 	public static final String posizione = "posizione(X,Y)";
+	public static final String direzione = "direzione(D)";
 	
 	static Logger logger = Logger.getLogger(Labirinto.class.getName());
 	LabirintoModel model;
@@ -38,18 +41,29 @@ public class Labirinto extends Environment {
 		
 		if (model.atStart){
 			addPercept("velocistaRosso",start);
+			addPercept("velocistaRosso",Literal.parseLiteral(posizione.replace("X,Y" ,""+  model.position[0] + "," + model.position[1] + "")));
 			model.atStart = false;
 		}
-		//if(model.checkNextPosition){
-			addPercept("velocistaRosso",Literal.parseLiteral(posizione.replace("X,Y" ,""+  model.position[0] + "," + model.position[1] + "")));
-			///}
-				
+		if(model.checkNextPosition){
+			addPercept("velocistaRosso",Literal.parseLiteral(direzione.replace("D", model.move )));
+			model.checkNextPosition = false;
+		}
+		if(model.makeAnotherChoice){
+			addPercept("velocistaRosso",anotherChoice);
+			model.makeAnotherChoice = false;
+		}
+		
 		if(model.getCella(model.position[0], model.position[1]).getArtefatto() != null)
 			addPercept("velocistaRosso",artefatct);
 		
 		if(model.getCella(model.position[0], model.position[1]).isUscita())
 			addPercept("velocistaRosso",end);
-
+						
+		if(model.gotIt){
+			addPercept("velocistaRosso",gotIt);
+			addPercept("velocistaRosso",Literal.parseLiteral(posizione.replace("X,Y" ,""+  model.position[0] + "," + model.position[1] + "")));
+			model.gotIt = false;
+		}
 	}
 	
 	/**
@@ -64,11 +78,12 @@ public class Labirinto extends Environment {
 			result = model.trovaEntrata();
 		}else if(action.equals(selezionaDirezione)){
 			result = model.selezionaDirezione();
+		}else if (action.getFunctor().equals(controllo)) {
+			String l = action.getTerm(0).toString();
+			result = model.controllo(l);
 		}
-//		}else if (action.equals(moveUp)) { 
-//			result = model.updateModel();
 //		} else if (action.equals(moveRight)) {
-//			result = model.updateModel();
+//			result = model.updateModel()
 //		}else if (action.equals(moveDown)) {
 //			result = model.updateModel();
 //		}else if (action.equals(moveLeft)) {

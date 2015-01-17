@@ -16,6 +16,10 @@ public class LabirintoModel {
 		int [] position = new int[2];
 		boolean atStart = false;
 		boolean checkNextPosition = false;
+		boolean makeAnotherChoice = false;
+		boolean gotIt = false;
+		String move;
+		
 		
 		public LabirintoModel(){
 			
@@ -68,29 +72,50 @@ public class LabirintoModel {
 					if(table[i][j].isEntrata()){
 						position[0]=i;
 						position[1]=j;
+						atStart = true;
+						return true;
 					}
-				}
-			atStart = true;
-			return true;
+				}			
+			return false;
 		}
 		
 		public boolean selezionaDirezione(){
 			Random rnd = new Random();
-			Cella cella = new Cella(0,0);
+			
 			//Cella cellaSupport = new Cella(0,0);
 			int direction = rnd.nextInt(4)+1;
-			System.out.println(direction);
 			switch (direction){
 			case 1: //muove sopra				
-				cella = getCella(position[0]-1,position[1]);							
+				move = "moveUp";						
 				break;
 			case 2 : //muove a destra		
-				cella = getCella(position[0],position[1]+1);
+				move = "moveRight";
 				break;
 			case 3 : //muove in basso 
-				cella = getCella(position[0]+1,position[1]);
+				move = "moveDown";
 				break;
 			case 4 : //muove a sinistra
+				move = "moveLeft";
+				break;
+					
+			}	
+			checkNextPosition = true;
+			return true;
+		}
+		
+		public boolean controllo(String dir){
+			Cella cella = new Cella(0,0);
+			switch (dir){
+			case "moveUp": //muove sopra				
+				cella = getCella(position[0]-1,position[1]);							
+				break;
+			case "moveRight" : //muove a destra		
+				cella = getCella(position[0],position[1]+1);
+				break;
+			case "moveDown" : //muove in basso 
+				cella = getCella(position[0]+1,position[1]);
+				break;
+			case "moveLeft" : //muove a sinistra
 				cella = getCella(position[0],position[1]-1);
 				break;
 					
@@ -98,16 +123,14 @@ public class LabirintoModel {
 						
 			try{
 				if(cella.isAttraversabile()){
+					gotIt = true; 
 					position[0] = cella.getCoordinataX();
 					position[1] = cella.getCoordinataY();
-				}else
-					selezionaDirezione();
+				}else 
+					makeAnotherChoice = true;
 			}catch(NullPointerException e){
-				selezionaDirezione();
+					makeAnotherChoice = true;
 			}
-			checkNextPosition = true;
-			//view = new LabirintoView(table, position);
-			
 			return true;
 		}
 
