@@ -23,9 +23,9 @@
 		<- controllo(D);
 			!nextStep.
 
-//+posizione(X,Y)[source(percept)]
-//	: true
-//		<- -+posizione(X,Y).
++posizione(X,Y)[source(percept)]
+	: true
+		<- -+posizione(X,Y).
 
 +!nextStep
 	: direzioneNonPercorribile  
