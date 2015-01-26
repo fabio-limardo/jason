@@ -38,6 +38,7 @@ public class Labirinto extends Environment {
 	private void updatePercepts(){
 		log("Updating Percepts");
 		clearPercepts();
+		clearPercepts("velocistaRosso");
 		
 		if (model.atStart){
 			addPercept("velocistaRosso",start);

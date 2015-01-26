@@ -1,7 +1,7 @@
 // Agent velocistaSquadraRossa in project labirintoInganno
 
 /* Initial beliefs and rules */
-posizione(X,Y).
+//posizione(X,Y).
 
 /* Initial goals */
 
@@ -23,12 +23,12 @@ posizione(X,Y).
 		<- controllo(D);
 			!nextStep.
 
-+posizione(X,Y) 
-	: true
-		<- -+posizione(X,Y).
+//+posizione(X,Y)[source(percept)]
+//	: true
+//		<- -+posizione(X,Y).
 
 +!nextStep
-	: direzioneNonPercorribile
+	: direzioneNonPercorribile  
 		<- .print("Non è possibile proseguire per la direzione desiderata"); selezionaDirezione.
 		
 +!nextStep
