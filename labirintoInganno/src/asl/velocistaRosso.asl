@@ -19,7 +19,7 @@
 
 +direzione(D)[source(percept)] 
 	: true
-		<- controllo(D);!checkForArtefacts;
+		<- controllo(D);
 			!nextStep.
 
 +posizione(X,Y)[source(percept)]
@@ -31,16 +31,16 @@
 		<- cercaArtefatto;
 			!leggiArtefatto.
 
-+artefatto(N,C)
++artefatto(N,C)[source(percept)]
 	: artefattoAnalizzato(N,T) & T == 1
 		<- puntoFermo(N,C); .send(detectiveRosso,tell,artefatto(N));
 		 -artefatto(N,C);selezionaDirezione.
 		
-+artefatto(N,C)
++artefatto(N,C)[source(percept)]
 	: artefattoAnalizzato(N,T) & T == 0
 		<- -artefatto(N,C); selezionaDirezione.
 		
-+artefatto(N,C)
++artefatto(N,C)[source(percept)]
 	:not artefattoAnalizzato(N,T)
 		<- puntoFermo(N,C); selezionaDirezione.
 		
@@ -59,7 +59,7 @@
 +!nextStep
 	: direzionePercorribile
 		<- .print("Avanziamo");
-		// !checkForArtefacts
+		 	!checkForArtefacts
 		.
 +!nextStep
 	: fineGioco
