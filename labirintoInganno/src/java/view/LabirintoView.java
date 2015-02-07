@@ -9,11 +9,14 @@ public class LabirintoView {
 	public LabirintoView(Cella[][] labirinto){
 		
 		for(int i=0;i<23;i++){
-			for(int j=0;j<41;j++){				
+			for(int j=0;j<41;j++){		
+				if(labirinto[i][j].isUscita())
+					System.out.print("(" + labirinto[i][j].getCoordinataX() + "," + labirinto[i][j].getCoordinataY() +")");
 				if(labirinto[i][j].isAttraversabile() && labirinto[i][j].isViaCorretta() )
-					System.out.print("* ");
+					System.out.print("* ");					
 				if(labirinto[i][j].isAttraversabile() && !labirinto[i][j].isViaCorretta())
-					System.out.print("  ");
+					//System.out.print("  ");
+					System.out.print("(" + labirinto[i][j].getCoordinataX() + "," + labirinto[i][j].getCoordinataY() +")");
 				if(!labirinto[i][j].isAttraversabile() )
 					System.out.print("X ");
 			}

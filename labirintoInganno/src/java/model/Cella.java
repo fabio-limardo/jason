@@ -5,14 +5,11 @@ import java.util.ArrayList;
 public class Cella {
 	private int coordinataX;
 	private int coordinataY;
-	private boolean aperta;
 	private boolean attraversabile = false;
-	private boolean inPath = false; 
 	private boolean viaCorretta;
 	private boolean entrata = false;
 	private boolean uscita = false;
 	private boolean muro;
-	private ArrayList<Cella> neighbors = new ArrayList<>();
 	private Artefatto artefatto = null;
 	
 	public Cella(int x,int y){
@@ -59,14 +56,6 @@ public class Cella {
 		this.entrata = entrata;
 	}
 
-	public boolean isAperta() {
-		return aperta;
-	}
-
-	public void setAperta(boolean aperta) {
-		this.aperta = aperta;
-	}
-
 	public boolean isMuro() {
 		return muro;
 	}
@@ -74,37 +63,7 @@ public class Cella {
 	public void setMuro() {
 		this.muro = true;
 	}
-	public void addNeighbor(Cella other) {
-        if (!this.neighbors.contains(other)) { // avoid duplicates
-            this.neighbors.add(other);
-        }
-        if (!other.neighbors.contains(this)) { // avoid duplicates
-            other.neighbors.add(this);
-        }
-    }
 	
-    // used in updateGrid()
-    public boolean isCellBelowNeighbor() {
-        return this.neighbors.contains(new Cella(this.coordinataX, this.coordinataY + 1));
-    }
-    // used in updateGrid()
-    public boolean isCellRightNeighbor() {
-        return this.neighbors.contains(new Cella(this.coordinataX + 1, this.coordinataY));
-    }
-    // useful Cell representation
-    @Override
-    public String toString() {
-        return String.format("Cell(%s, %s)", coordinataX, coordinataY);
-    }
-    
-	public boolean isInPath() {
-		return inPath;
-	}
-
-	public void setInPath(boolean inPath) {
-		this.inPath = inPath;
-	}
-
 	public boolean isViaCorretta() {
 		return viaCorretta;
 	}

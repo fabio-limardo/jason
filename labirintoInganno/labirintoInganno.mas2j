@@ -4,8 +4,8 @@ MAS labirintoInganno {
 	environment : env.Labirinto
 
 	agents:
-		agent1 sample_agent;
-		velocistaRosso velocistaSquadraRossa;
+		detectiveRosso;
+		velocistaRosso;
 //		detectiveSquadraRossa #3;
 //		
 //		velocistaSquadraBlu #3;
