@@ -4,11 +4,11 @@
 
 /* Initial goals */
 
-!cercaArtefatti.
+!getStartPosition.
 
 /* Plans */
 
-+!cercaArtefatti 
++!getStartPosition 
 	: not startTrovato
 		<- trovaEntrata ; 
 			!cercaArtefatti.
@@ -16,42 +16,59 @@
 +!cercaArtefatti
 	: startTrovato
 		<-selezionaDirezione.
+		
++posizione(X,Y)[source(percept)]
+	: true
+		<- -+posizione(X,Y).
 
-+direzione(D)[source(percept)] 
++direzione(D)
 	: true
 		<- controllo(D);
-			!nextStep.
+			!nextStep(D).
 			
-+!nextStep
++!nextStep(D)
 	: direzioneNonPercorribile  
-		<- .print("Non è possibile proseguire per la direzione desiderata"); selezionaDirezione.
+		<- .print("Detective Rosso sceglie nuova direzione"); selezionaDirezione(D).
 		
-+!nextStep
++!nextStep(D)
 	: direzionePercorribile
-		<- .print("Avanziamo"); !checkForArtefacts.
+		<- .print("Detective Rossso Avanza"); !checkForArtefacts.
 
-+!nextStep
-	: fineGioco
++fineGioco
 		<- true. 			
 	
 +!checkForArtefacts
 	: true
-		<- cercaArteffati;
+		<- cercaArtefatto;
 			!leggiArtefatto.
-
+			
 +!leggiArtefatto
 	: artefattoTrovato
-		<- analizzaArtefatto; selezionaDirezione.
+		<- analizzaArtefatto.
 
 +!leggiArtefatto
 	: not artefattoTrovato
 		<- selezionaDirezione.
 		
-+artefatto(N)
-	: artefattoScoperto(N,C,T,V) & V == 3
-		<- cambiaArtefatto(N,C,T); -artefatto(N) ; V = 1.
++artefattoScoperto(N,C,T,V,K)
+	: artefattoScoperto(N,C,T,V,1)
+		<- +artefattoRegistrato(N,C,T,V,K);
+		.send(velocistaRosso,tell,artefattoRegistrato(N,C,T,V,K));
+		selezionaDirezione.
+		
++artefattoScoperto(N,C,T,V,K)
+	:artefattoScoperto(N,C,T,V,0)
+		<- +artefattoRegistrato(N,C,T,V,K);
+		selezionaDirezione.
 		
 +artefatto(N)
-	: artefattoScoperto(N,C,T,V) & V < 3
-		<- -artefatto(N) ; V = V+1 .
+	: artefattoRegistrato(N,C,T,V,K) & V == 3
+		<- cambiaArtefatto(N,C,T);
+		R = 2; -+artefattoRegistrato(N,C,T,R,K);
+		selezionaDirezione.
 		
++artefatto(N)
+	: artefattoRegistrato(N,C,T,V,K) & V < 3
+		<- R = V+1; -+artefattoRegistrato(N,C,T,R,K);
+		selezionaDirezione.
+	

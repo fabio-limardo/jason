@@ -6,6 +6,7 @@ public class Artefatto {
 	private String name = "";
 	private int[] pos = new int[2];
 	private String cambio = "";
+	private float trustability;
 	
 	
 	public Artefatto(boolean sc, String n, int x, int y){
@@ -14,6 +15,7 @@ public class Artefatto {
 		pos[0] = x;
 		pos[1] = y;
 		cambio = "originale";
+		trustability = 0.5F ;
 	}
 	public void setStradaCorretta(boolean sc){
 		stradaCorretta = sc;
@@ -30,6 +32,12 @@ public class Artefatto {
 	}
 	public String getCambio(){
 		return cambio;
+	}
+	public float getTrustability() {
+		return trustability;
+	}
+	public void setTrustability(float trustability) {
+		this.trustability = trustability;
 	}
 
 }

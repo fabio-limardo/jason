@@ -1,5 +1,6 @@
 package env;
 
+import java.util.Random;
 import java.util.logging.Logger;
 
 import jason.asSyntax.Literal;
@@ -7,7 +8,7 @@ import jason.asSyntax.Structure;
 import jason.environment.Environment;
 import jason.environment.grid.Location;
 import action.*;
-
+import model.*;
 public class Labirinto extends Environment {
 
 	public static final Literal trovaEntrata = Literal.parseLiteral("trovaEntrata");
@@ -28,6 +29,7 @@ public class Labirinto extends Environment {
 	public static final String posizione = "posizione(X,Y)";
 	public static final String direzione = "direzione(D)";
 	public static final String artefatto = "artefatto(name,correctness)";
+	public static final String artefattoScoperto = "artefattoScoperto(n,c,t,v,colore)";
 
 	static Logger logger = Logger.getLogger(Labirinto.class.getName());
 	LabirintoModel labirintModel;
@@ -69,6 +71,7 @@ public class Labirinto extends Environment {
 			model = detBlu;
 			break;
 		}
+		clearPercepts();
 		clearPercepts(agent);
 		//removePercept(agent,Literal.parseLiteral("posizione(X,Y)"));
 
@@ -85,11 +88,13 @@ public class Labirinto extends Environment {
 			addPercept(agent,anotherChoice);
 			model.setMakeAnotherChoice(false);
 		}		
-		if(model.isFindArtefacts())
+		if(model.isFindArtefacts()){
 			addPercept(agent,artefatct);
+			model.setFindArtefacts(false);
+		}
 
 		if(model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita())
-			addPercept(agent,end);
+			addPercept(end);
 
 		if(model.isGotIt() && !model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita()){
 			addPercept(agent,gotIt);
@@ -98,19 +103,59 @@ public class Labirinto extends Environment {
 		}
 		
 		if(model.isFineGioco()){
-			addPercept(agent,Literal.parseLiteral("fineGioco") );
+			addPercept(Literal.parseLiteral("fineGioco") );
 		}
 		
 		if(model.isCorrectWay()){
 			addPercept(agent,Literal.parseLiteral(artefatto.replace("name,correctness" ,
-					""+  model.getTable()[model.getPosition()[0]][model.getPosition()[1]].getArtefatto().getName() + "," +"1")));
+					""+  labirintModel.getTable()[model.getPosition()[0]][model.getPosition()[1]].getArtefatto().getName() + "," +"1")));
 			model.setCorrectWay(false);
 		}
 		
 		if(model.isWrongWay()){
 			addPercept(agent,Literal.parseLiteral(artefatto.replace("name,correctness" ,
-					""+  model.getTable()[model.getPosition()[0]][model.getPosition()[1]].getArtefatto().getName() + "," +"0")));
+					""+  labirintModel.getTable()[model.getPosition()[0]][model.getPosition()[1]].getArtefatto().getName() + "," +"0")));
 			model.setWrongWay(false);
+		}
+		
+		if(model.isArtefattoAnalizzato()){
+			Artefatto artefatto = labirintModel.getTable()[model.getPosition()[0]][model.getPosition()[1]].getArtefatto();
+			String name = artefatto.getName();
+			String correctness = "";
+			if(artefatto.isStradaCorretta())
+				correctness = "1";
+			else
+				correctness = "0";
+			String change = artefatto.getCambio();
+			String trustability = "";
+			String colore = "";
+			if(change.equals("originale"))
+				trustability = "1";
+			
+			if(change.equals(agent)){
+				if(artefatto.getTrustability()>=0.5)
+					trustability = "1";
+					else
+						trustability = "0";
+						
+			}
+			
+			if(change.equals("detectiveBlu"))
+				trustability = "0";
+			
+			switch(agent){
+			case "detectiveRosso":
+				colore = "1";
+				break;
+			case "detectiveBlu":
+				colore = "0";
+				break;
+				
+			}
+			
+			addPercept(Literal.parseLiteral(artefattoScoperto.replace("n,c,t,v,colore",
+					name + "," + correctness + "," + trustability + "," + "0" + "," + colore)));
+			model.setArtefattoAnalizzato(false);
 		}
 
 	}
@@ -144,6 +189,9 @@ public class Labirinto extends Environment {
 			result = model.trovaEntrata();
 		}else if(action.equals(selezionaDirezione)){
 			result = model.selezionaDirezione();
+		}else if(action.getFunctor().equals("selezionaDirezione")){
+			String arg0 = action.getTerm(0).toString();
+			result = model.selezionaDirezione(arg0);
 		}else if (action.getFunctor().equals("controllo")) {
 			String l = action.getTerm(0).toString();
 			result = model.controllo(l);

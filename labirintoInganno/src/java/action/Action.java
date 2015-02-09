@@ -1,8 +1,10 @@
 package action;
+import java.util.ArrayList;
 import java.util.Random;
 
 import model.Cella;
 import env.*;
+import model.*;
 
 public class Action {
 	LabirintoModel labirinto;
@@ -16,7 +18,8 @@ public class Action {
 	boolean findArtefacts = false;
 	boolean correctWay = false;
 	boolean wrongWay = false;
-	
+	ArrayList<Artefatto> artefactsList = new ArrayList<Artefatto>();
+	boolean artefattoAnalizzato = false;
 	public Action(LabirintoModel labirinto){
 		this.labirinto = labirinto;		
 	}
@@ -55,6 +58,32 @@ public class Action {
 
 		}	
 		checkNextPosition = true;
+		return true;
+	}
+	public boolean selezionaDirezione(String dir){
+		Random rnd = new Random();
+
+		int direction = rnd.nextInt(4)+1;
+		switch (direction){
+		case 1: //muove sopra				
+			move = "moveUp";						
+			break;
+		case 2 : //muove a destra		
+			move = "moveRight";
+			break;
+		case 3 : //muove in basso 
+			move = "moveDown";
+			break;
+		case 4 : //muove a sinistra
+			move = "moveLeft";
+			break;
+
+		}
+		
+		if(dir.equals(move))
+			selezionaDirezione(dir);
+		else
+			checkNextPosition = true;
 		return true;
 	}
 
@@ -104,6 +133,7 @@ public class Action {
 			correctWay = true;
 		else
 			wrongWay = true;
+		
 		return true;
 	}
 	
@@ -113,7 +143,9 @@ public class Action {
 	}
 	
 	public boolean analizzaArtefatto(){
-		//TODO
+		Cella cella = labirinto.getCella(position[0],position[1]);
+		//artefactsList.add(cella.getArtefatto());
+		artefattoAnalizzato = true;
 		return true;
 	}
 	
@@ -223,6 +255,22 @@ public class Action {
 
 	public void setWrongWay(boolean wrongWay) {
 		this.wrongWay = wrongWay;
+	}
+
+	public ArrayList<Artefatto> getArtefactsList() {
+		return artefactsList;
+	}
+
+	public void setArtefactsList(ArrayList<Artefatto> artefactsList) {
+		this.artefactsList = artefactsList;
+	}
+
+	public boolean isArtefattoAnalizzato() {
+		return artefattoAnalizzato;
+	}
+
+	public void setArtefattoAnalizzato(boolean artefattoAnalizzato) {
+		this.artefattoAnalizzato = artefattoAnalizzato;
 	}
 
 }

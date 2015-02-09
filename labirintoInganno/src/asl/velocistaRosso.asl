@@ -32,16 +32,16 @@
 			!leggiArtefatto.
 
 +artefatto(N,C)[source(percept)]
-	: artefattoAnalizzato(N,T) & T == 1
+	:  artefattoRegistrato(N,C,T,V,K) & T == 1
 		<- puntoFermo(N,C); .send(detectiveRosso,tell,artefatto(N));
 		 -artefatto(N,C);selezionaDirezione.
 		
 +artefatto(N,C)[source(percept)]
-	: artefattoAnalizzato(N,T) & T == 0
-		<- -artefatto(N,C); selezionaDirezione.
+	:  artefattoRegistrato(N,C,T,V,K) & T == 0
+		<-selezionaDirezione.
 		
 +artefatto(N,C)[source(percept)]
-	:not artefattoAnalizzato(N,T)
+	:not  artefattoRegistrato(N,C,T,V,K)
 		<- puntoFermo(N,C); selezionaDirezione.
 		
 +!leggiArtefatto
@@ -54,7 +54,7 @@
 
 +!nextStep
 	: direzioneNonPercorribile  
-		<- .print("Non è possibile proseguire per la direzione desiderata"); selezionaDirezione.
+		<- .print("Non è possibile proseguire per la direzione desiderata"); selezionaDirezione(D).
 		
 +!nextStep
 	: direzionePercorribile
