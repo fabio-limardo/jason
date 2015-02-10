@@ -17,9 +17,9 @@
 	: startTrovato
 		<-selezionaDirezione.
 		
-+posizione(X,Y)[source(percept)]
-	: true
-		<- -+posizione(X,Y).
+//+posizione(X,Y)[source(percept)]
+//	: true
+//		<- -+posizione(X,Y).
 
 +direzione(D)
 	: true
@@ -52,13 +52,13 @@
 		
 +artefattoScoperto(N,C,T,V,K)
 	: artefattoScoperto(N,C,T,V,1)
-		<- +artefattoRegistrato(N,C,T,V,K);
+		<- -+artefattoRegistrato(N,C,T,V,K);
 		.send(velocistaRosso,tell,artefattoRegistrato(N,C,T,V,K));
 		selezionaDirezione.
 		
 +artefattoScoperto(N,C,T,V,K)
 	:artefattoScoperto(N,C,T,V,0)
-		<- +artefattoRegistrato(N,C,T,V,K);
+		<- -+artefattoRegistrato(N,C,T,V,K);
 		selezionaDirezione.
 		
 +artefatto(N)

@@ -20,11 +20,11 @@
 +direzione(D)[source(percept)] 
 	: true
 		<- controllo(D);
-			!nextStep.
+			!nextStep(D).
 
-+posizione(X,Y)[source(percept)]
-	: true
-		<- -+posizione(X,Y).
+//+posizione(X,Y)[source(percept)]
+//	: true
+//		<- -+posizione(X,Y).
 
 +!checkForArtefacts
 	: true
@@ -52,16 +52,16 @@
 	: not artefattoTrovato
 		<- selezionaDirezione.
 
-+!nextStep
++!nextStep(D)
 	: direzioneNonPercorribile  
 		<- .print("Non è possibile proseguire per la direzione desiderata"); selezionaDirezione(D).
 		
-+!nextStep
++!nextStep(D)
 	: direzionePercorribile
 		<- .print("Avanziamo");
 		 	!checkForArtefacts
 		.
-+!nextStep
++!nextStep(D)
 	: fineGioco
 		<- .print("Complimenti, hai vinto").
 		
