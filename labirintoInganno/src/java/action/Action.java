@@ -150,7 +150,7 @@ public class Action {
 	}
 	
 	public boolean cambiaArtefatto(String name,String correctness,String trustability){
-		//TODO
+		log("siamo a cambia artefatto");
 		return true;
 	}
 	

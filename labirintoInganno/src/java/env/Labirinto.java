@@ -71,6 +71,7 @@ public class Labirinto extends Environment {
 			model = detBlu;
 			break;
 		}
+		
 		clearPercepts();
 		clearPercepts(agent);
 		//removePercept(agent,Literal.parseLiteral("posizione(X,Y)"));
@@ -155,6 +156,7 @@ public class Labirinto extends Environment {
 			
 			addPercept(Literal.parseLiteral(artefattoScoperto.replace("n,c,t,v,colore",
 					name + "," + correctness + "," + trustability + "," + "0" + "," + colore)));
+			
 			model.setArtefattoAnalizzato(false);
 		}
 
