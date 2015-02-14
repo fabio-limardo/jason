@@ -37,6 +37,7 @@ public class Labirinto extends Environment {
 	DetRosso detRosso;
 	VelBlu velBlu;
 	DetBlu detBlu;
+	Action model;
 
 
 
@@ -46,16 +47,16 @@ public class Labirinto extends Environment {
 		detRosso = new DetRosso(labirintModel);
 		velBlu = new VelBlu(labirintModel);
 		detBlu = new DetBlu(labirintModel);
+		model = new Action(labirintModel);
 
 	}
 
 	/**
 	 * Aggiorna i percepts degli agenti in base allo stato attuale del Modello
-	 * (LabirintoModel)
 	 */
 	private void updatePercepts(String agent){
-		log("Updating Percepts velocistaRosso");
-		Action model = new Action(labirintModel);
+		log("Updating Percepts" + agent );
+		
 
 		switch(agent){
 		case "velocistaRosso":
@@ -191,10 +192,12 @@ public class Labirinto extends Environment {
 			result = model.trovaEntrata();
 		}else if(action.equals(selezionaDirezione)){
 			result = model.selezionaDirezione();
-		}else if(action.getFunctor().equals("selezionaDirezione")){
-			String arg0 = action.getTerm(0).toString();
-			result = model.selezionaDirezione(arg0);
-		}else if (action.getFunctor().equals("controllo")) {
+		}
+//		else if(action.getFunctor().equals("selezionaDirezione")){
+//			String arg0 = action.getTerm(0).toString();
+//			result = model.selezionaDirezione(arg0);
+//		}
+		else if (action.getFunctor().equals("controllo")) {
 			String l = action.getTerm(0).toString();
 			result = model.controllo(l);
 		}else if(action.equals(cercaArtefatto)){

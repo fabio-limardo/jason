@@ -60,32 +60,32 @@ public class Action {
 		checkNextPosition = true;
 		return true;
 	}
-	public boolean selezionaDirezione(String dir){
-		Random rnd = new Random();
-
-		int direction = rnd.nextInt(4)+1;
-		switch (direction){
-		case 1: //muove sopra				
-			move = "moveUp";						
-			break;
-		case 2 : //muove a destra		
-			move = "moveRight";
-			break;
-		case 3 : //muove in basso 
-			move = "moveDown";
-			break;
-		case 4 : //muove a sinistra
-			move = "moveLeft";
-			break;
-
-		}
-		
-		if(dir.equals(move))
-			selezionaDirezione(dir);
-		else
-			checkNextPosition = true;
-		return true;
-	}
+//	public boolean selezionaDirezione(String dir){
+//		Random rnd = new Random();
+//
+//		int direction = rnd.nextInt(4)+1;
+//		switch (direction){
+//		case 1: //muove sopra				
+//			move = "moveUp";						
+//			break;
+//		case 2 : //muove a destra		
+//			move = "moveRight";
+//			break;
+//		case 3 : //muove in basso 
+//			move = "moveDown";
+//			break;
+//		case 4 : //muove a sinistra
+//			move = "moveLeft";
+//			break;
+//
+//		}
+//		
+//		if(dir.equals(move))
+//			selezionaDirezione(dir);
+//		else
+//			checkNextPosition = true;
+//		return true;
+//	}
 
 	public boolean controllo(String dir){
 		Cella cella = new Cella(0,0);

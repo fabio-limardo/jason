@@ -26,6 +26,10 @@
 		<- controllo(D);
 			!nextStep.
 			
++!checkForArtefacts
+	: true
+		<- cercaArtefatto;
+			!leggiArtefatto.			
 +!nextStep
 	: direzioneNonPercorribile  
 		<- .print("Detective Rosso sceglie nuova direzione"); selezionaDirezione.
@@ -37,10 +41,7 @@
 +fineGioco
 		<- true. 			
 	
-+!checkForArtefacts
-	: true
-		<- cercaArtefatto;
-			!leggiArtefatto.
+
 			
 +!leggiArtefatto
 	: artefattoTrovato
@@ -52,13 +53,13 @@
 
 		
 +artefattoScoperto(N,C,T,V,K)
-	: artefattoScoperto(N,C,T,V,1) & not artefattoRegistrato(N,_,_,_,_)
+	: artefattoScoperto(N,C,T,V,K) & not artefattoRegistrato(N,_,_,_,_) & K=1
 		<- -+artefattoRegistrato(N,C,T,V,K);
 		.send(velocistaRosso,tell,artefattoRegistrato(N,C,T,V,1));
 		selezionaDirezione.
 		
 +artefattoScoperto(N,C,T,V,K) 
-	:artefattoScoperto(N,C,T,V,0)  & not artefattoRegistrato(N,_,_,_,_)
+	:artefattoScoperto(N,C,T,V,K)  & not artefattoRegistrato(N,_,_,_,_) & K=0
 		<- -+artefattoRegistrato(N,C,T,V,0);
 		selezionaDirezione.
 		
