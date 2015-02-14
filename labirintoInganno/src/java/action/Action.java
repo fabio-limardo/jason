@@ -75,7 +75,7 @@ public class Action {
 //			move = "moveDown";
 //			break;
 //		case 4 : //muove a sinistra
-//			move = "moveLeft";
+//			move = "moveLeft"; 
 //			break;
 //
 //		}
@@ -103,16 +103,13 @@ public class Action {
 		case "moveLeft" : //muove a sinistra
 			cella = labirinto.getCella(position[0],position[1]-1);
 			break;
-
 		}	
-
 		try{
 			if(cella.isAttraversabile()){
 				gotIt = true; 
 				position[0] = cella.getCoordinataX();
 				position[1] = cella.getCoordinataY();
-				log("(" + cella.getCoordinataX() + "," + cella.getCoordinataY() + ")");
-				
+				log("(" + cella.getCoordinataX() + "," + cella.getCoordinataY() + ")");				
 			}else 
 				makeAnotherChoice = true;
 		}catch(NullPointerException e){

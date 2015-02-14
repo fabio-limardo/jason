@@ -71,10 +71,8 @@
 	: artefattoRegistrato(N,C,T,V,K) & V == 3
 		<- cambiaArtefatto(N,C,T).
 
-/*Questo la prima volta lo fa */		
 +artefatto(N)
 	: artefattoRegistrato(N,C,T,V,K) & V < 3
 		<- R = V+1; -+artefattoRegistrato(N,C,T,R,K);
-		.send(velocistaRosso,untell,artefattoRegistrato(N,C,T,R,K)). //aggiunto
-		
-	
+		.send(velocistaRosso,untell,artefattoRegistrato(N,C,T,R,K)).		
+
