@@ -25,11 +25,12 @@ public class Labirinto extends Environment {
 	public static final Literal analizzaArtefatto = Literal.parseLiteral("analizzaArtefatto");
 
 
-
+	
 	public static final String posizione = "posizione(X,Y)";
 	public static final String direzione = "direzione(D)";
 	public static final String artefatto = "artefatto(name,correctness)";
 	public static final String artefattoScoperto = "artefattoScoperto(n,c,t,v,colore)";
+	public static final String cambiaArtefatto = "cambiaArtefatto(name,correctness,trustability)";
 
 	static Logger logger = Logger.getLogger(Labirinto.class.getName());
 	LabirintoModel labirintModel;
@@ -134,17 +135,18 @@ public class Labirinto extends Environment {
 			if(change.equals("originale"))
 				trustability = "1";
 			
-			if(change.equals(agent)){
-				if(artefatto.getTrustability()>=0.5)
+			if(change.equals("detectiveRosso"))
+				if(artefatto.getTrustability()>= 0.5)
 					trustability = "1";
-					else
-						trustability = "0";
-						
-			}
+				else
+					trustability = "0";	
 			
 			if(change.equals("detectiveBlu"))
-				trustability = "0";
-			
+				if(artefatto.getTrustability()<= 0.5)
+						trustability = "1";
+				else
+						trustability = "0";
+					
 			switch(agent){
 			case "detectiveRosso":
 				colore = "1";
@@ -214,7 +216,7 @@ public class Labirinto extends Environment {
 			String arg0 = action.getTerm(0).toString();
 			String arg1 = action.getTerm(1).toString();
 			String arg2 = action.getTerm(2).toString();
-			result = model.cambiaArtefatto(arg0, arg1,arg2);
+			result = model.cambiaArtefatto(arg0, arg1,arg2,ag);
 		}
 		else {
 			logger.info(ag +": Failed to execute action " + action);

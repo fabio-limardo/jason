@@ -8,8 +8,7 @@ import model.*;
 public class LabirintoModel {
 	private LabirintoView view; 
 	private Matrice matrice = new Matrice();
-	private Artefatto[] artefattoViaCorretta = new Artefatto[3];
-	private Artefatto[] artefattoViaErrata = new Artefatto[3];
+	private Artefatto[] artefattoArray = new Artefatto[6];
 	private final int dimX = 23;
 	private final int dimY = 41;
 	private Cella[][] table = new Cella[dimX][dimY];
@@ -63,13 +62,13 @@ public class LabirintoModel {
 
 	private void initArtefatti(){
 		getCella(1,0).setArtefatto(prova = new Artefatto(true, "prova",10,4));
-		getCella(10,4).setArtefatto(artefattoViaCorretta[0] = new Artefatto(true, "artefatto1",10,4));
-		getCella(18,15).setArtefatto(artefattoViaCorretta[1] = new Artefatto(true,"artefatto2",18,15));
-		getCella(7,23).setArtefatto(artefattoViaCorretta[2] = new Artefatto(true,"artefatto3",7,23));
+		getCella(10,4).setArtefatto(artefattoArray[0] = new Artefatto(true, "artefatto0",10,4));
+		getCella(18,15).setArtefatto(artefattoArray[1] = new Artefatto(true,"artefatto1",18,15));
+		getCella(7,23).setArtefatto(artefattoArray[2] = new Artefatto(true,"artefatto2",7,23));
 		
-		getCella(8,3).setArtefatto(artefattoViaErrata[0] = new Artefatto(false,"artefatto4",8,3));
-		getCella(3,18).setArtefatto(artefattoViaErrata[1] = new Artefatto(false,"artefatto5",3,18));
-		getCella(6,28).setArtefatto(artefattoViaErrata[2] = new Artefatto(false,"artefatto6",6,28));
+		getCella(8,3).setArtefatto(artefattoArray[3] = new Artefatto(false,"artefatto3",8,3));
+		getCella(3,18).setArtefatto(artefattoArray[4] = new Artefatto(false,"artefatto4",3,18));
+		getCella(6,28).setArtefatto(artefattoArray[5] = new Artefatto(false,"artefatto5",6,28));
 	}
 	
 public boolean trovaEntrata(){
@@ -181,6 +180,10 @@ public boolean trovaEntrata(){
 
 	public int getDimY() {
 		return dimY;
+	}
+
+	public Artefatto[] getArtefattoArray() {
+		return artefattoArray;
 	}
 
 	

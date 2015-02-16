@@ -39,5 +39,8 @@ public class Artefatto {
 	public void setTrustability(float trustability) {
 		this.trustability = trustability;
 	}
+	public void setCambio(String cambio) {
+		this.cambio = cambio;
+	}
 
 }

@@ -65,6 +65,7 @@
 	: direzionePercorribile
 		<- .print("Avanziamo");
 		 	!checkForArtefacts
+		 	//selezionaDirezione
 		.
 +!nextStep
 	: fineGioco

@@ -69,7 +69,8 @@
 		
 +artefatto(N)
 	: artefattoRegistrato(N,C,T,V,K) & V == 3
-		<- cambiaArtefatto(N,C,T).
+		<- cambiaArtefatto(N,C,T);
+		analizzaArtefatto.
 
 +artefatto(N)
 	: artefattoRegistrato(N,C,T,V,K) & V < 3

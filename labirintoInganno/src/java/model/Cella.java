@@ -82,6 +82,14 @@ public class Cella {
 	public void setAttraversabile2(boolean attraversabile) {
 		this.attraversabile = attraversabile;
 	}
+
+	public void setCoordinataX(int coordinataX) {
+		this.coordinataX = coordinataX;
+	}
+
+	public void setCoordinataY(int coordinataY) {
+		this.coordinataY = coordinataY;
+	}
 	
 	
 
