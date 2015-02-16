@@ -17,9 +17,9 @@
 	: startTrovato
 		<-selezionaDirezione.
 		
-//+posizione(X,Y)[source(percept)]
-//	: true
-//		<- -+posizione(X,Y).
++posizione(X,Y)[source(percept)]
+	: true
+		<- -+posizione(X,Y).
 
 +direzione(D)[source(percept)] 
 	: true

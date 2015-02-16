@@ -75,14 +75,17 @@ public class Action {
 		case 4 : //muove a sinistra
 			move = "moveLeft";
 			break;
-
 		}	
 		checkNextPosition = true;
 		return true;
-	}	public boolean controllo(String dir){
+	}	
+	
+	
+	public boolean controllo(String dir){
 		Cella cella = new Cella(0,0);
 		int[] posSupporto = new int[2];
 		log("before switch");
+		try{
 		switch (dir){
 		case "moveUp": //muove sopra				
 			cella = labirinto.getCella(position[0]-1,position[1]);							
@@ -96,7 +99,11 @@ public class Action {
 		case "moveLeft" : //muove a sinistra
 			cella = labirinto.getCella(position[0],position[1]-1);
 			break;
-		}	
+		}
+		}catch(ArrayIndexOutOfBoundsException e){
+			makeAnotherChoice = true;
+			return true;
+		}
 		try{
 			if(cella.isAttraversabile()){
 				if(usaPuntoFermo){
