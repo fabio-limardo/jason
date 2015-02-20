@@ -10,16 +10,16 @@
 
 +!getStartPosition 
 	: not startTrovato
-		<- trovaEntrata ; 
+		<- trovaEntrata; 
 			!cercaArtefatti.
 
 +!cercaArtefatti
 	: startTrovato
 		<-selezionaDirezione.
 		
-+posizione(X,Y)[source(percept)]
-	: true
-		<- -+posizione(X,Y).
+//+posizione(X,Y)[source(percept)]
+//	: true
+//		<- -+posizione(X,Y).
 
 +direzione(D)[source(percept)] 
 	: true
@@ -30,12 +30,12 @@
 	: true
 		<- cercaArtefatto;
 			!leggiArtefatto.			
-+!nextStep
-	: direzioneNonPercorribile  
++!nextStep 
+	: direzioneNonPercorribile  & not fineGioco
 		<- .print("Detective Rosso sceglie nuova direzione"); selezionaDirezione.
 		
 +!nextStep
-	: direzionePercorribile
+	: direzionePercorribile & not fineGioco
 		<- .print("Detective Rossso Avanza"); !checkForArtefacts.
 
 +fineGioco
@@ -50,30 +50,39 @@
 +!leggiArtefatto
 	: not artefattoTrovato
 		<- selezionaDirezione.
-
+/**
+ * Se è la prima volta che incontra l'artefatto lo registra e lo invia al Velocista
+ */
 		
-+artefattoScoperto(N,C,T,V,K)
-	: artefattoScoperto(N,C,T,V,K) & not artefattoRegistrato(N,_,_,_,_) & K=1
-		<- -+artefattoRegistrato(N,C,T,V,K);
-		.send(velocistaRosso,tell,artefattoRegistrato(N,C,T,V,1));
++artefattoScoperto(N,C,T,V)
+	: not artefattoRegistrato(N,C,T,V)
+		<- +artefattoRegistrato(N,C,T,V);
+		.send(velocistaRosso,tell,artefattoRegistrato(N,C,T,V));
 		selezionaDirezione.
 		
-+artefattoScoperto(N,C,T,V,K) 
-	:artefattoScoperto(N,C,T,V,K)  & not artefattoRegistrato(N,_,_,_,_) & K=0
-		<- -+artefattoRegistrato(N,C,T,V,0);
+//+artefattoScoperto(N,C,T,V,K) 
+//	:not artefattoRegistrato(N,_,_,_,_) 
+//		<- -+artefattoRegistrato(N,C,T,V,0);
+//		selezionaDirezione.
+
+/*
+ * Se l'artefatto è già stato Registrato, lo aggiorno con le nuove caratteristiche, tranne per
+ * il numero di volte utilizzato che valore di volte utilizzato che viene mantenuto dall'agente.
+ * 
+ * */
+ 		
++artefattoScoperto(N,C,T,V)
+	: artefattoRegistrato(N,_,_,Z)
+		<- -+artefattoRegistrato(N,C,T,Z);
 		selezionaDirezione.
 		
-+artefattoScoperto(N,C,T,V,K)
-	: artefattoRegistrato(N,_,_,_,_)
-		<- selezionaDirezione.
-		
 +artefatto(N)
-	: artefattoRegistrato(N,C,T,V,K) & V == 3
-		<- cambiaArtefatto(N,C,T);
-		analizzaArtefatto.
+	: artefattoRegistrato(N,C,T,V) & V == 3
+		<- cambiaArtefatto(N,C,T). //Abbiamo tolto analizzaArtefatto.
+									
 
 +artefatto(N)
-	: artefattoRegistrato(N,C,T,V,K) & V < 3
-		<- R = V+1; -+artefattoRegistrato(N,C,T,R,K);
-		.send(velocistaRosso,untell,artefattoRegistrato(N,C,T,R,K)).		
+	: artefattoRegistrato(N,C,T,V) & V < 3
+		<- R = V+1; -+artefattoRegistrato(N,C,T,R);
+		.send(velocistaRosso,tell,artefattoModificato(N,C,T,R)).		
 

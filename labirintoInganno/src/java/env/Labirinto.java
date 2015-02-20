@@ -29,7 +29,7 @@ public class Labirinto extends Environment {
 	public static final String posizione = "posizione(X,Y)";
 	public static final String direzione = "direzione(D)";
 	public static final String artefatto = "artefatto(name,correctness)";
-	public static final String artefattoScoperto = "artefattoScoperto(n,c,t,v,colore)";
+	public static final String artefattoScoperto = "artefattoScoperto(n,c,t,v)";
 	public static final String cambiaArtefatto = "cambiaArtefatto(name,correctness,trustability)";
 
 	static Logger logger = Logger.getLogger(Labirinto.class.getName());
@@ -123,6 +123,12 @@ public class Labirinto extends Environment {
 		
 		if(model.isArtefattoAnalizzato()){
 			Artefatto artefatto = labirintModel.getTable()[model.getPosition()[0]][model.getPosition()[1]].getArtefatto();
+			//Artefatto artefatto = null;
+//			for(int i =0; i<6; i++){
+//				if(labirintModel.getArtefattoArray()[i].getName().equals(model.getNameArt()))
+//					artefatto = labirintModel.getArtefattoArray()[i];
+//			}
+			
 			String name = artefatto.getName();
 			String correctness = "";
 			if(artefatto.isStradaCorretta())
@@ -147,18 +153,18 @@ public class Labirinto extends Environment {
 				else
 						trustability = "0";
 					
-			switch(agent){
-			case "detectiveRosso":
-				colore = "1";
-				break;
-			case "detectiveBlu":
-				colore = "0";
-				break;
-				
-			}
+//			switch(agent){
+//			case "detectiveRosso":
+//				colore = "1";
+//				break;
+//			case "detectiveBlu":
+//				colore = "0";
+//				break;
+//				
+//			}
 			
-			addPercept(Literal.parseLiteral(artefattoScoperto.replace("n,c,t,v,colore",
-					name + "," + correctness + "," + trustability + "," + "0" + "," + colore)));
+			addPercept(agent,Literal.parseLiteral(artefattoScoperto.replace("n,c,t,v",
+					name + "," + correctness + "," + trustability + "," + "0")));
 			
 			model.setArtefattoAnalizzato(false);
 		}

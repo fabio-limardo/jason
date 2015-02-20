@@ -32,22 +32,23 @@
 			!leggiArtefatto.
 
 +artefatto(N,C)[source(percept)]
-	:  artefattoRegistrato(N,C,T,V,K) & T == 1
+	:  artefattoRegistrato(N,C,T,V) & T == 1
 		<- puntoFermo(N,C); .send(detectiveRosso,tell,artefatto(N));
 		 selezionaDirezione.
 		
 +artefatto(N,C)[source(percept)]
-	:  artefattoRegistrato(N,C,T,V,K) & T == 0
+	:  artefattoRegistrato(N,C,T,V) & T == 0
 		<-selezionaDirezione.
 		
 +artefatto(N,C)[source(percept)]
-	:not  artefattoRegistrato(N,C,T,V,K)
+	:not  artefattoRegistrato(N,_,_,_)
 		<- selezionaDirezione.
 		
--artefattoRegistrato(N,C,T,V,K)[source(detectiveRosso)]
-	: artefattoRegistrato(N,_,_,_,_)
-		<- -+artefattoRegistrato(N,C,T,V,K); //aggiunto
++artefattoModificato(N,C,T,V)[source(detectiveRosso)]
+	: artefattoRegistrato(N,_,_,_)
+		<- -+artefattoRegistrato(N,C,T,V); //aggiunto
 		.send(detectiveRosso,untell,artefatto(N)).
+
 				
 +!leggiArtefatto
 	: artefattoTrovato
@@ -58,20 +59,17 @@
 		<- selezionaDirezione.
 
 +!nextStep
-	: direzioneNonPercorribile  
-		<- .print("Non è possibile proseguire per la direzione desiderata"); selezionaDirezione.
+	: direzioneNonPercorribile  & not fineGioco
+		<- .print("Non è possibile proseguire per la direzione desiderata"); 
+		selezionaDirezione.
 		
 +!nextStep
-	: direzionePercorribile
+	: direzionePercorribile & not fineGioco
 		<- .print("Avanziamo");
 		 	!checkForArtefacts
 		 	//selezionaDirezione
-		.
-+!nextStep
-	: fineGioco
-		<- .print("Complimenti, hai vinto").
+		 	.
 		
-
-
-
-
++fineGioco
+		<- .print("Velocista Rosso ha vinto").
+		

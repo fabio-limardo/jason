@@ -1,0 +1,37 @@
+javax.swing.text.BadLocationException: Invalid insert
+	at javax.swing.text.GapContent.insertString(Unknown Source)
+	at javax.swing.text.AbstractDocument.handleInsertString(Unknown Source)
+	at javax.swing.text.AbstractDocument.insertString(Unknown Source)
+	at jason.runtime.MASColorTextPane.append(MASConsoleColorGUI.java:163)
+	at jason.runtime.MASConsoleColorGUI.append(MASConsoleColorGUI.java:108)
+	at jason.runtime.MASConsoleLogHandler.publish(MASConsoleLogHandler.java:71)
+	at java.util.logging.Logger.log(Unknown Source)
+	at java.util.logging.Logger.doLog(Unknown Source)
+	at java.util.logging.Logger.log(Unknown Source)
+	at java.util.logging.Logger.info(Unknown Source)
+	at jason.stdlib.println.execute(println.java:63)
+	at jason.asSemantics.TransitionSystem.applyExecInt(TransitionSystem.java:667)
+	at jason.asSemantics.TransitionSystem.applySemanticRule(TransitionSystem.java:222)
+	at jason.asSemantics.TransitionSystem.reasoningCycle(TransitionSystem.java:1416)
+	at jason.infra.centralised.CentralisedAgArch.run(CentralisedAgArch.java:205)
+	at java.lang.Thread.run(Unknown Source)
+	
+	
+[velocistaRosso] No fail event was generated for +!nextStep[source(self)]
+[velocistaRosso] Found a goal for which there is no applicable plan:+!nextStep[source(self)]
+intention 1687: 
+    +direzione(moveRight)[source(percept)] <- ... !nextStep / {D=moveRight}
+    
+(2,2)
+Updating PerceptsdetectiveRosso
+Updating PerceptsdetectiveRosso
+Updating PerceptsdetectiveRosso
+[Environment] act error!
+java.lang.NullPointerException
+	at env.Labirinto.updatePercepts(Labirinto.java:126)
+	at env.Labirinto.executeAction(Labirinto.java:226)
+	at jason.environment.Environment$1.run(Environment.java:362)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+    

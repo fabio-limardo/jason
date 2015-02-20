@@ -36,6 +36,7 @@ public class Action {
 	boolean corretezzaArtefatto3;
 	boolean corretezzaArtefatto4;
 	boolean corretezzaArtefatto5;
+	private String nameArt;
 	
 	
 	
@@ -247,6 +248,7 @@ public class Action {
 	}
 	public boolean apriArtefatto(){
 		Cella cella = labirinto.getCella(position[0],position[1]);
+		nameArt = cella.getArtefatto().getName();
 		if(cella.getArtefatto().isStradaCorretta())
 			correctWay = true;
 		else
@@ -426,6 +428,11 @@ public class Action {
 
 	public void setPosPuntoFermo(int[] posPuntoFermo) {
 		this.posPuntoFermo = posPuntoFermo;
+	}
+
+
+	public String getNameArt() {
+		return nameArt;
 	}
 
 }
