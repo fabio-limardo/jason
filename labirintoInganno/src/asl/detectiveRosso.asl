@@ -37,6 +37,14 @@
 +!nextStep
 	: direzionePercorribile & not fineGioco
 		<- .print("Detective Rossso Avanza"); !checkForArtefacts.
+		
++!nextStep 
+	: direzioneNonPercorribile  &  fineGioco
+		<- .print("Gioco concluso").
+		
++!nextStep
+	: direzionePercorribile &  fineGioco
+		<- .print("Gioco concluso").
 
 +fineGioco
 		<- true. 			
@@ -86,3 +94,7 @@
 		<- R = V+1; -+artefattoRegistrato(N,C,T,R);
 		.send(velocistaRosso,tell,artefattoModificato(N,C,T,R)).		
 
++artefatto(N)
+	: artefattoRegistrato(N,C,T,V) & V > 3
+ 	<- R = 1; -+artefattoRegistrato(N,C,T,R);
+		.send(velocistaRosso,tell,artefattoModificato(N,C,T,R)).		

@@ -61,7 +61,6 @@ public class Action {
 
 	public boolean selezionaDirezione(){
 		Random rnd = new Random();
-		Cella cellaSupporto;
 		int direction = rnd.nextInt(4)+1;
 		switch (direction){
 		case 1: //muove sopra				
@@ -78,6 +77,7 @@ public class Action {
 			break;
 		}	
 		checkNextPosition = true;
+		log("Selezionata direzione:" + move);
 		return true;
 	}	
 	
@@ -85,7 +85,6 @@ public class Action {
 	public boolean controllo(String dir){
 		Cella cella = new Cella(0,0);
 		int[] posSupporto = new int[2];
-		log("before switch");
 		try{
 		switch (dir){
 		case "moveUp": //muove sopra				
@@ -143,6 +142,7 @@ public class Action {
 					
 					checkPositionUnderCostraint(posSupporto,corretezzaArtefatto0,
 							corretezzaArtefatto1,corretezzaArtefatto2,corretezzaArtefatto3,corretezzaArtefatto4,corretezzaArtefatto5);
+					gotIt = true;
 				}
 				else{
 					gotIt = true; 
@@ -237,7 +237,7 @@ public class Action {
 		}
 		this.position[0] = position[0];
 		this.position[1] = position[1];
-		gotIt = true;
+		//gotIt = true;
 	}
 	
 	public boolean cercaArtefatto(){

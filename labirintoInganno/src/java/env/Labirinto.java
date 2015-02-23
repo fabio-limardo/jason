@@ -57,8 +57,14 @@ public class Labirinto extends Environment {
 	 */
 	private void updatePercepts(String agent){
 		log("Updating Percepts" + agent );
-		
-
+		/*
+		 * Cancelliamo i Percept
+		 */
+		clearPercepts();
+		clearPercepts(agent);
+		/*
+		 * Selezioniamo l'agente interessato
+		 */
 		switch(agent){
 		case "velocistaRosso":
 			model = velRosso;
@@ -74,10 +80,9 @@ public class Labirinto extends Environment {
 			break;
 		}
 		
-		clearPercepts();
-		clearPercepts(agent);
-		//removePercept(agent,Literal.parseLiteral("posizione(X,Y)"));
-
+		/*
+		 * Andiamo a dare una nuova rappresentazione del mondo.
+		 */
 		if (model.isAtStart()){
 			addPercept(agent,start);
 			addPercept(agent,Literal.parseLiteral(posizione.replace("X,Y" ,""+  model.getPosition()[0] + "," + model.getPosition()[1] + "")));

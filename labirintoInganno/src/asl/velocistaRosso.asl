@@ -49,7 +49,10 @@
 		<- -+artefattoRegistrato(N,C,T,V); //aggiunto
 		.send(detectiveRosso,untell,artefatto(N)).
 
-				
++artefattoModificato(N,C,T,V)[source(detectiveRosso)]
+	: not artefattoRegistrato(N,_,_,_)
+		<- .print("Ehm....qualcosa non funziona").
+						
 +!leggiArtefatto
 	: artefattoTrovato
 		<- apriArtefatto.
@@ -66,10 +69,15 @@
 +!nextStep
 	: direzionePercorribile & not fineGioco
 		<- .print("Avanziamo");
-		 	!checkForArtefacts
-		 	//selezionaDirezione
-		 	.
+		 	!checkForArtefacts.
++!nextStep 
+	: direzioneNonPercorribile  &  fineGioco
+		<- .print("Gioco concluso").
 		
++!nextStep
+	: direzionePercorribile &  fineGioco
+		<- .print("Gioco concluso").
+			
 +fineGioco
 		<- .print("Velocista Rosso ha vinto").
 		
