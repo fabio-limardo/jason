@@ -1,4 +1,4 @@
-// Agent velocistaSquadraRossa in project labirintoInganno
+// Agent velocistaBlu in project labirintoInganno
 
 /* Initial beliefs and rules */
 
@@ -33,7 +33,7 @@
 
 +artefatto(N,C)[source(percept)]
 	:  artefattoRegistrato(N,C,T,V) & T == 1
-		<- puntoFermo(N,C); .send(detectiveRosso,tell,artefatto(N));
+		<- puntoFermo(N,C); .send(detectiveBlu,tell,artefatto(N));
 		 selezionaDirezione.
 		
 +artefatto(N,C)[source(percept)]
@@ -44,12 +44,12 @@
 	:not  artefattoRegistrato(N,_,_,_)
 		<- selezionaDirezione.
 		
-+artefattoModificato(N,C,T,V)[source(detectiveRosso)]
++artefattoModificato(N,C,T,V)[source(detectiveBlu)]
 	: artefattoRegistrato(N,_,_,_)
 		<- -+artefattoRegistrato(N,C,T,V); //aggiunto
-		.send(detectiveRosso,untell,artefatto(N)).
+		.send(detectiveBlu,untell,artefatto(N)).
 
-+artefattoModificato(N,C,T,V)[source(detectiveRosso)]
++artefattoModificato(N,C,T,V)[source(detectiveBlu)]
 	: not artefattoRegistrato(N,_,_,_)
 		<- +qualcosaNonFunziona.
 						
@@ -77,18 +77,18 @@
 +!nextStep
 	: direzionePercorribile &  fineGioco
 		<- .print("Gioco concluso").
+
 +!nextStep
 	: fineGioco & haiVinto
-		<-.print("Gioco concluso, Velocista Rosso ha vinto").
+		<-.print("Gioco concluso, Velocista Blu ha vinto").
 
 +!nextStep
 	: fineGioco & not haiVinto 
-		<-.print("Gioco concluso, Velocista Rosso ha perso").
+		<-.print("Gioco concluso, Velocista Blu ha perso").
 			
 +fineGiocoVincitore 
 	: true
-		<- .print("Velocista Rosso ha vinto").
+		<- .print("Velocista Blu ha vinto").
 +fineGiocoPerdente 
 	: not haiVinto
-		<- .print("Velocista Rosso ha perso").
-		
+		<- .print("Velocista Blu ha perso").

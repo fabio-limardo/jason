@@ -23,6 +23,7 @@ public class Labirinto extends Environment {
 	public static final Literal cercaArtefatto = Literal.parseLiteral("cercaArtefatto");
 	public static final Literal apriArtefatto = Literal.parseLiteral("apriArtefatto");
 	public static final Literal analizzaArtefatto = Literal.parseLiteral("analizzaArtefatto");
+	public static final Literal vittoria = Literal.parseLiteral("haiVinto");
 
 
 	
@@ -56,7 +57,7 @@ public class Labirinto extends Environment {
 	 * Aggiorna i percepts degli agenti in base allo stato attuale del Modello
 	 */
 	private void updatePercepts(String agent){
-		log("Updating Percepts" + agent );
+		//log("Updating Percepts" + agent );
 		/*
 		 * Cancelliamo i Percept
 		 */
@@ -101,18 +102,20 @@ public class Labirinto extends Environment {
 			model.setFindArtefacts(false);
 		}
 
-		if(model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita())
+		if(model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita()){
+			addPercept(agent,vittoria);
 			addPercept(end);
-
+		}
 		if(model.isGotIt() && !model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita()){
 			addPercept(agent,gotIt);
 			addPercept(agent,Literal.parseLiteral(posizione.replace("X,Y" ,""+  model.getPosition()[0] + "," + model.getPosition()[1] + "")));
 			model.setGotIt(false);
 		}
 		
-		if(model.isFineGioco()){
-			addPercept(Literal.parseLiteral("fineGioco") );
-		}
+//		if(model.isFineGioco()){
+//			addPercept(agent,Literal.parseLiteral("haiVinto") );
+//			addPercept(Literal.parseLiteral("fineGioco") );
+//		}
 		
 		if(model.isCorrectWay()){
 			addPercept(agent,Literal.parseLiteral(artefatto.replace("name,correctness" ,
@@ -182,7 +185,7 @@ public class Labirinto extends Environment {
 	 */
 	
 	public boolean executeAction(String ag, Structure action) {
-		System.out.println("[" + ag + "] doing: " + action);
+		//System.out.println("[" + ag + "] doing: " + action);
 		boolean result = false;
 		Action model = new Action(labirintModel);
 		 

@@ -1,4 +1,4 @@
-// Agent detectiveSquadraRossa in project labirintoInganno
+// Agent detectiveBlu in project labirintoInganno
 
 /* Initial beliefs and rules */
 
@@ -32,11 +32,11 @@
 			!leggiArtefatto.			
 +!nextStep 
 	: direzioneNonPercorribile  & not fineGioco
-		<- .print("Detective Rosso sceglie nuova direzione"); selezionaDirezione.
+		<- .print("Detective Blu sceglie nuova direzione"); selezionaDirezione.
 		
 +!nextStep
 	: direzionePercorribile & not fineGioco
-		<- .print("Detective Rossso Avanza"); !checkForArtefacts.
+		<- .print("Detective Blu Avanza"); !checkForArtefacts.
 		
 +!nextStep 
 	: direzioneNonPercorribile  &  fineGioco
@@ -65,7 +65,7 @@
 +artefattoScoperto(N,C,T,V)
 	: not artefattoRegistrato(N,C,T,_)
 		<- +artefattoRegistrato(N,C,T,V);
-		.send(velocistaRosso,tell,artefattoRegistrato(N,C,T,V));
+		.send(velocistaBlu,tell,artefattoRegistrato(N,C,T,V));
 		selezionaDirezione.
 		
 //+artefattoScoperto(N,C,T,V,K) 
@@ -92,9 +92,9 @@
 +artefatto(N)
 	: artefattoRegistrato(N,C,T,V) & V < 3
 		<- R = V+1; -+artefattoRegistrato(N,C,T,R);
-		.send(velocistaRosso,tell,artefattoModificato(N,C,T,R)).		
+		.send(velocistaBlu,tell,artefattoModificato(N,C,T,R)).		
 
 +artefatto(N)
 	: artefattoRegistrato(N,C,T,V) & V > 3
  	<- R = 1; -+artefattoRegistrato(N,C,T,R);
-		.send(velocistaRosso,tell,artefattoModificato(N,C,T,R)).		
+		.send(velocistaBlu,tell,artefattoModificato(N,C,T,R)).		

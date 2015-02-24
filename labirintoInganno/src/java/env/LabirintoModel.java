@@ -61,7 +61,7 @@ public class LabirintoModel {
 	}
 
 	private void initArtefatti(){
-		getCella(1,0).setArtefatto(prova = new Artefatto(true, "prova",10,4));
+		getCella(1,0).setArtefatto(prova = new Artefatto(false, "prova",10,4));
 		getCella(10,4).setArtefatto(artefattoArray[0] = new Artefatto(true, "artefatto0",10,4));
 		getCella(18,15).setArtefatto(artefattoArray[1] = new Artefatto(true,"artefatto1",18,15));
 		getCella(7,23).setArtefatto(artefattoArray[2] = new Artefatto(true,"artefatto2",7,23));
