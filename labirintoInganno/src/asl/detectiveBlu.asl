@@ -46,9 +46,9 @@
 	: direzionePercorribile &  fineGioco
 		<- .print("Gioco concluso").
 
-+fineGioco
-		<- true. 			
-	
++!nextStep
+	: fineGioco
+		<-.print("Gioco concluso").
 
 			
 +!leggiArtefatto

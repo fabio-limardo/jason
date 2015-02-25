@@ -103,8 +103,11 @@ public class Labirinto extends Environment {
 		}
 
 		if(model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita()){
-			addPercept(agent,vittoria);
-			addPercept(end);
+			if (agent.equals("velocistaRosso") || agent.equals("velocistaBlu")){
+				addPercept(agent,vittoria);
+				addPercept(end);
+			}
+			
 		}
 		if(model.isGotIt() && !model.getCella(model.getPosition()[0], model.getPosition()[1]).isUscita()){
 			addPercept(agent,gotIt);

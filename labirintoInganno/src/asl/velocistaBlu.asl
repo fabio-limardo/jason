@@ -22,9 +22,9 @@
 		<- controllo(D);
 			!nextStep.
 
-//+posizione(X,Y)[source(percept)]
-//	: true
-//		<- -+posizione(X,Y).
++posizione(X,Y)[source(percept)]
+	: true
+		<- -+posizione(X,Y).
 
 +!checkForArtefacts
 	: true
@@ -86,9 +86,3 @@
 	: fineGioco & not haiVinto 
 		<-.print("Gioco concluso, Velocista Blu ha perso").
 			
-+fineGiocoVincitore 
-	: true
-		<- .print("Velocista Blu ha vinto").
-+fineGiocoPerdente 
-	: not haiVinto
-		<- .print("Velocista Blu ha perso").
