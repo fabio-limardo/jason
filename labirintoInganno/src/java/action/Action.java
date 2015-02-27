@@ -283,19 +283,36 @@ public class Action {
 		//TODO
 		for(int i=0;i<labirinto.getArtefattoArray().length;i++){
 			if(labirinto.getArtefattoArray()[i].getName().equals(name)){
-				labirinto.getArtefattoArray()[i].setStradaCorretta(!labirinto.getArtefattoArray()[i].isStradaCorretta());
-				if(agent.equals("detectiveRosso")){
-					float t = labirinto.getArtefattoArray()[i].getTrustability();
-					t = t + 0.1f;
-					labirinto.getArtefattoArray()[i].setTrustability(t) ;
-				}else
-				{
-					float t = labirinto.getArtefattoArray()[i].getTrustability();
-					t = t - 0.1f;
-					labirinto.getArtefattoArray()[i].setTrustability(t);
+				//Se è originale tento di boicottare l'avversario 
+				if(labirinto.getArtefattoArray()[i].getCambio().equals("original")){
+					double v = Math.random(); //Provo a vedere se riesco a scassinare l'artefatto
+					if(v >= 0.5)
+					{
+					if(agent.equals("detectiveRosso")){
+						labirinto.getArtefattoArray()[i].setStradaCorretta(!labirinto.getArtefattoArray()[i].isStradaCorretta());
+						labirinto.getArtefattoArray()[i].setTrustability(0.4f);
+					}
+					if(agent.equals("detectiveBlu")){
+						labirinto.getArtefattoArray()[i].setStradaCorretta(!labirinto.getArtefattoArray()[i].isStradaCorretta());
+						labirinto.getArtefattoArray()[i].setTrustability(0.6f);
+					}
+					labirinto.getArtefattoArray()[i].setCambio(agent);
+					}
 				}
-				labirinto.getArtefattoArray()[i].setCambio(agent);
-					
+				else{					
+					labirinto.getArtefattoArray()[i].setStradaCorretta(!labirinto.getArtefattoArray()[i].isStradaCorretta());
+				
+					if(agent.equals("detectiveRosso")){
+						float t = labirinto.getArtefattoArray()[i].getTrustability();
+						t = t + 0.1f;
+						labirinto.getArtefattoArray()[i].setTrustability(t) ;
+					}else{
+						float t = labirinto.getArtefattoArray()[i].getTrustability();
+						t = t - 0.1f;
+						labirinto.getArtefattoArray()[i].setTrustability(t);
+					}
+					labirinto.getArtefattoArray()[i].setCambio(agent);
+					}	
 			}
 		}
 		return true;
